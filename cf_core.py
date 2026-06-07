@@ -151,11 +151,6 @@ def get_neighbors(ratings, user_index, item_index, similarity_function, k=None):
     return neighbors
 
 
-def predict_item_average(_ratings, stats, _user_id, item_id):
-    item_index = item_id - 1
-    return clamp(stats["item_means"][item_index])
-
-
 def predict_user_cosine(ratings, stats, user_id, item_id):
     user_index = user_id - 1
     item_index = item_id - 1
@@ -268,7 +263,6 @@ def predict_average_knn(ratings, stats, user_id, item_id, k=DEFAULT_K):
 
 
 METHODS = {
-    0: predict_item_average,
     1: predict_user_cosine,
     2: predict_user_pearson_knn,
     3: predict_user_cosine_knn,
@@ -406,6 +400,12 @@ def print_results(results, mae):
     print(f"F1: {metrics['f1']:.4f}")
     print(f"Accuracy: {metrics['accuracy']:.4f}")
 
+def print_method_help():
+    print("Available methods:")
+    print("1 - Weighted Sum using Cosine Similarity")
+    print("2 - Adjusted Weighted N Nearest Neighbors using Pearson Correlation")
+    print("3 - Weighted N Nearest Neighbors using Cosine Similarity")
+    print("4 - Average N Nearest Neighbors Ranking")
 
 if __name__ == "__main__":
     ratings = load_ratings_xls("jester-data-1.xls")
@@ -414,7 +414,7 @@ if __name__ == "__main__":
     test_cases = random_test_cases(ratings, size=100)
 
     results, mae = evaluate_cases(
-        method_id=4,
+        method_id=3,
         ratings=ratings,
         stats=stats,
         test_cases=test_cases
