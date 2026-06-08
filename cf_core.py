@@ -5,7 +5,7 @@ import xlrd
 MISSING = 99.0
 MIN_RATING = -10.0
 MAX_RATING = 10.0
-DEFAULT_K = 20
+DEFAULT_K = 25
 
 
 def load_ratings_xls(filename):
@@ -399,13 +399,6 @@ def print_results(results, mae):
     print(f"Recall: {metrics['recall']:.4f}")
     print(f"F1: {metrics['f1']:.4f}")
     print(f"Accuracy: {metrics['accuracy']:.4f}")
-
-def print_method_help():
-    print("Available methods:")
-    print("1 - Weighted Sum using Cosine Similarity")
-    print("2 - Adjusted Weighted N Nearest Neighbors using Pearson Correlation")
-    print("3 - Weighted N Nearest Neighbors using Cosine Similarity")
-    print("4 - Average N Nearest Neighbors Ranking")
 
 if __name__ == "__main__":
     ratings = load_ratings_xls("jester-data-1.xls")

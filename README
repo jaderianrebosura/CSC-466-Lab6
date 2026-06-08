@@ -30,3 +30,12 @@ The above programs utilize cf_core.py, a program that:
 // implements predictive collaborative filtering methods
 // evaluates predictions using evaluation metrics like MAE
 
+## Implemented Methods
+
+### Method 1: Weighted Sum using Cosine Similarity
+
+### Method 2: Adjusted Weighted N Nearest Neighbors using Pearson Correlation
+
+### Method 3: Weighted N Nearest Neighbors using Cosine Similarity
+
+### Method 4: Average N Nearest Neighbors Ranking

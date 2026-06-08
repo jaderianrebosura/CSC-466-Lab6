@@ -7,13 +7,16 @@ def print_help_message():
     print("Usage: python3 EvaluateCFRandom.py Method Size Repeats")
     print()
     print("Methods:")
-    print("0: Predict Item Average")
     print("1: Predict User Cosine")
     print("2: Predict User Pearson KNN")
     print("3: Predict User Cosine KNN")
     print("4: Predict Average KNN")
 
 def main():
+    if len(sys.argv) == 1:
+        print_help_message()
+        return
+
     if len(sys.argv) != 4:
         print_help_message()
         return

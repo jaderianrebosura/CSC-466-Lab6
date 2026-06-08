@@ -6,7 +6,6 @@ def print_help_message():
     print("Usage: python3 EvaluateCFList.py Method Filename")
     print()
     print("Methods:")
-    print("0: Predict Item Average")
     print("1: Predict User Cosine")
     print("2: Predict User Pearson KNN")
     print("3: Predict User Cosine KNN")
@@ -24,6 +23,10 @@ def load_test_cases(filename):
     return test_cases
 
 def main():
+    if len(sys.argv) == 1:
+        print_help_message()
+        return
+
     if len(sys.argv) != 3:
         print_help_message()
         return
