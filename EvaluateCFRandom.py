@@ -1,83 +1,40 @@
 import sys
-import statistics
+import numpy as np
 
-from cf_core import (
-    load_ratings_xls,
-    compute_stats,
-    random_test_cases,
-    evaluate_cases,
-    print_results,
-    print_method_help
-)
+from cf_core import *
 
-data = "jester-data-1.xls"
-
+def print_help_message():
+    print("Usage: python3 EvaluateCFRandom.py Method Size Repeats")
+    print()
+    print("Methods:")
+    print("0: Predict Item Average")
+    print("1: Predict User Cosine")
+    print("2: Predict User Pearson KNN")
+    print("3: Predict User Cosine KNN")
+    print("4: Predict Average KNN")
 
 def main():
-
-    if len(sys.argv) == 1:
-        print_method_help()
-        print()
-        print("Usage:")
-        print("python EvaluateCFRandom.py Method Size Repeats")
-        return
-
     if len(sys.argv) != 4:
-        print("Error: incorrect number of arguments.")
-        print("Usage:")
-        print("python EvaluateCFRandom.py Method Size Repeats")
+        print_help_message()
         return
-
     method_id = int(sys.argv[1])
     size = int(sys.argv[2])
     repeats = int(sys.argv[3])
-    ratings = load_ratings_xls(data)
+
+    ratings = load_ratings_xls("jester-data-1.xls")
     stats = compute_stats(ratings)
 
-    mae_values = []
+    maes = []
 
     for run in range(repeats):
-
-        print()
-        print(f"Run {run + 1}")
-        print()
-
-        test_cases = random_test_cases(
-            ratings,
-            size
-        )
-
-        results, mae = evaluate_cases(
-            method_id,
-            ratings,
-            stats,
-            test_cases
-        )
-
+        test_cases = random_test_cases(ratings, size)
+        results, mae = evaluate_cases(method_id, ratings, stats, test_cases)
         print_results(results, mae)
-
-        mae_values.append(mae)
-
-    print()
-    print("Summary")
-    print()
-
-    print("MAE values:")
-
-    for i, mae in enumerate(mae_values, start=1):
-        print(f"Run {i}: {mae:.4f}")
-
-    mean_mae = statistics.mean(mae_values)
-
-    if len(mae_values) > 1:
-        std_mae = statistics.stdev(mae_values)
-    else:
-        std_mae = 0.0
+        maes.append(mae)
 
     print()
-    print(f"Mean MAE: {mean_mae:.4f}")
-    print(f"Std Dev MAE: {std_mae:.4f}")
-
+    print(f"Mean MAE: {np.mean(maes):.4f}")
+    print(f"Std Dev MAE: {np.std(maes):.4f}")
 
 if __name__ == "__main__":
     main()

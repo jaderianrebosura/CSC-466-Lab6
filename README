@@ -1,0 +1,32 @@
+Lab 6 Report - CSC 466
+
+Names: Julien Fiechter, Jaderian Rebosura
+Emails: jfiechte@calpoly.edu, jrebosur@calpoly.edu
+
+All executable programs included in this lab are the following:
+// EvaluateCFList.py
+// EvaluateCFRandom.py
+// cf_core.py
+// README
+
+Running EvaluateCFList.py
+// expected usage: python3 EvaluateCFList.py Method Filename
+// example usage: python3 EvaluateCFList.py 4 jester-data-1.xls
+* Method refers to the collaborate filtering method ID, which, in this case is Predict Average KNN
+* Filename refers to the inputed file being used, which is jester-data-1.xls in this case
+
+
+Running EvaluateCFRandom.py
+// expected usage: python3 EvaluateCFRandom.py Method Size Repeats
+// example usage: python3 EvaluateCFRandom.py 2 50 4
+* Method refers to the collaborative filtering method ID, which, in this case is Predict User Pearson KNN
+* Size refers to the # of random tests cases in a given run, which is 100 in this case
+* Repeats refers to the # of times it is repeated/run, which is 5 in this case
+
+The above programs utilize cf_core.py, a program that:
+// loads & parses the dataset
+// computes statistics
+// implements cosine and pearson correlation similarity functions
+// implements predictive collaborative filtering methods
+// evaluates predictions using evaluation metrics like MAE
+

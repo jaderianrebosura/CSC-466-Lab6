@@ -1,79 +1,43 @@
 import sys
-import csv
+import numpy as np
+from cf_core import *
 
-from cf_core import (
-    load_ratings_xls,
-    compute_stats,
-    evaluate_cases,
-    print_results,
-    print_method_help,
-    MISSING
-)
+def print_help_message():
+    print("Usage: python3 EvaluateCFList.py Method Filename")
+    print()
+    print("Methods:")
+    print("0: Predict Item Average")
+    print("1: Predict User Cosine")
+    print("2: Predict User Pearson KNN")
+    print("3: Predict User Cosine KNN")
+    print("4: Predict Average KNN")
 
-data = "jester-data-1.xls"
-
-
-def load_test_cases(filename, ratings):
+def load_test_cases(filename):
     test_cases = []
-
-    with open(filename, "r") as file:
-        reader = csv.reader(file)
-
-        for row in reader:
-            if len(row) < 2:
+    with open(filename, "r") as f:
+        for line in f:
+            line = line.strip()
+            if not line:
                 continue
-
-            user_id = int(row[0])
-            item_id = int(row[1])
-
-            user_index = user_id - 1
-            item_index = item_id - 1
-
-            if user_index < 0 or user_index >= ratings.shape[0]:
-                continue
-
-            if item_index < 0 or item_index >= ratings.shape[1]:
-                continue
-
-            if ratings[user_index, item_index] == MISSING:
-                continue
-
-            test_cases.append((user_id, item_id))
-
+            user, item = line.split(",")
+            test_cases.append((int(user), int(item)))
     return test_cases
 
-
 def main():
-    if len(sys.argv) == 1:
-        print_method_help()
-        print()
-        print("Usage:")
-        print("python EvaluateCFList.py Method Filename")
-        return
-
     if len(sys.argv) != 3:
-        print("Error: incorrect number of arguments.")
-        print("Usage:")
-        print("python EvaluateCFList.py Method Filename")
+        print_help_message()
         return
-
     method_id = int(sys.argv[1])
     filename = sys.argv[2]
 
-    ratings = load_ratings_xls(data)
+    ratings = load_ratings_xls("jester-data-1.xls")
     stats = compute_stats(ratings)
 
-    test_cases = load_test_cases(filename, ratings)
+    test_cases = load_test_cases(filename)
 
-    results, mae = evaluate_cases(
-        method_id,
-        ratings,
-        stats,
-        test_cases
-    )
+    results, mae = evaluate_cases(method_id, ratings, stats, test_cases)
 
     print_results(results, mae)
-
 
 if __name__ == "__main__":
     main()
