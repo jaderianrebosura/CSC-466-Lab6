@@ -11,9 +11,11 @@ All executable programs included in this lab are the following:
 
 Running EvaluateCFList.py
 // expected usage: python3 EvaluateCFList.py Method Filename
-// example usage: python3 EvaluateCFList.py 4 jester-data-1.xls
+// example usage: python3 EvaluateCFList.py 4 test_file.csv
 * Method refers to the collaborate filtering method ID, which, in this case is Predict Average KNN
-* Filename refers to the inputed file being used, which is jester-data-1.xls in this case
+* Filename: CSV file containing test cases
+Each line contains of the csv contains: UserID,ItemID
+
 
 
 Running EvaluateCFRandom.py
